@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PointCloudViewer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ROSUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://HSI-200-1D45JB:11311</Value>
+    </Setting>
+    <Setting Name="ThisIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.142</Value>
+    </Setting>
+    <Setting Name="ROSThisNode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PointCloudViewer_NET</Value>
+    </Setting>
+    <Setting Name="RGBImageTopic" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/left/image_rect</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

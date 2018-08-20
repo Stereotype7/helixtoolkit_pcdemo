@@ -1,0 +1,109 @@
+﻿<Window x:Class="PointCloudViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PointCloudViewer"
+        xmlns:h="http://helix-toolkit.org/wpf"
+        xmlns:helix="http://helix-toolkit.org/wpf/SharpDX"
+        xmlns:p="clr-namespace:PointCloudViewer.Properties"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1280">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="30"/>
+        <RowDefinition Height="30"/>
+        <RowDefinition Height="30"/>
+        <RowDefinition Height="1*"/>
+      </Grid.RowDefinitions>
+      <helix:Viewport3DX x:Name="viewport3D" Grid.Column="1" Grid.ColumnSpan="3" 
+                    Grid.Row="3"
+                    BackgroundColor="LightGray"
+                    ShowCoordinateSystem="True"
+                    EnableDesignModeRendering="True"
+                    FXAALevel="None"
+                    ShowFrameDetails="True"
+                    ShowFrameRate="True"
+                    Camera="{Binding Camera}"
+                    MSAA="Maximum"
+                    RenderTechnique="{Binding RenderTechnique}"
+                    EffectsManager="{Binding EffectsManager}">
+        <helix:Viewport3DX.InputBindings>
+          <KeyBinding Key="B" Command="helix:ViewportCommands.BackView" />
+          <KeyBinding Key="F" Command="helix:ViewportCommands.FrontView" />
+          <KeyBinding Key="U" Command="helix:ViewportCommands.TopView" />
+          <KeyBinding Key="D" Command="helix:ViewportCommands.BottomView" />
+          <KeyBinding Key="L" Command="helix:ViewportCommands.LeftView" />
+          <KeyBinding Key="R" Command="helix:ViewportCommands.RightView" />
+          <KeyBinding Key="Space" Command="helix:ViewportCommands.Reset" />
+          <KeyBinding Command="helix:ViewportCommands.ZoomExtents" Gesture="Control+E" />
+          <MouseBinding Command="helix:ViewportCommands.Rotate" Gesture="LeftClick" />
+          <MouseBinding Command="helix:ViewportCommands.Zoom" Gesture="MiddleClick" />
+          <MouseBinding Command="helix:ViewportCommands.Pan" Gesture="RightClick" />
+        </helix:Viewport3DX.InputBindings>
+
+        <helix:AmbientLight3D Color="{Binding AmbientLightColor}" />
+        <helix:DirectionalLight3D Direction="{Binding Camera.LookDirection}" Color="White" />
+      <helix:GroupModel3D x:Name="scene">
+        <helix:GroupModel3D  x:Name="grid" Transform="{Binding GridTransform}">
+          <helix:LineGeometryModel3D
+                  Geometry="{Binding GridLongRange}"  Thickness="0.5"
+                  Color="{Binding GridColor}" Transform="{Binding GridLRTransform}" />
+          <helix:LineGeometryModel3D
+                  Geometry="{Binding GridLongRangeMajor}"  Thickness="0.1"
+                  Color="#000099" Transform="{Binding GridLRTransform}" />
+          <helix:LineGeometryModel3D
+                  Geometry="{Binding GridMinor}"  Thickness="0.5"
+                  Color="{Binding GridColor}" />
+          <helix:LineGeometryModel3D
+                  Geometry="{Binding GridMajor}"  Thickness="1"
+                  Color="DarkGray"                 />
+        </helix:GroupModel3D>
+        <helix:LineGeometryModel3D
+              Geometry="{Binding XAxis}"  Thickness="1"
+              Color="Red" />
+        <helix:LineGeometryModel3D
+              Geometry="{Binding YAxis}"  Thickness="1"
+              Color="Green" />
+        <helix:LineGeometryModel3D
+              Geometry="{Binding ZAxis}"  Thickness="1"
+              Color="Blue" />
+        <helix:MeshGeometryModel3D x:Name="origin" Geometry="{Binding Origin}" Material="{Binding OriginMaterial}"/>
+      </helix:GroupModel3D>
+      <helix:PointGeometryModel3D x:Name="pointCloud"
+                              Figure="Ellipse"
+                              Geometry="{Binding PointCloud}"
+                              Size="1 1"
+                              Transform="{Binding PCTransform}"
+                              Color="White"/>
+    </helix:Viewport3DX>
+
+    <Grid Grid.Column="0" Grid.Row="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="30"/>
+        <RowDefinition Height="30"/>
+        <RowDefinition Height="30"/>
+        <RowDefinition Height="30"/>
+        <RowDefinition Height="1*"/>
+        <RowDefinition Height="100"/>
+      </Grid.RowDefinitions>
+      <Label x:Name="label1" Content="Baseline" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+      <Label x:Name="baseline" Content="-" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"/>
+      <Label x:Name="label5" Content="Resolution" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" />
+      <Label x:Name="resolution" Content="-" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
+      <Label x:Name="label10" Content="PC FPS" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" />
+      <Label x:Name="fps" Content="-" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3"/>
+    </Grid>
+    <CheckBox x:Name="checkBox" Content="Fast update" Margin="5,0,0,0" Grid.Row="1" Checked="checkBox_Checked" Unchecked="checkBox_Checked"/>
+  </Grid>
+</Window>
